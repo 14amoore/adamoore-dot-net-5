@@ -41,7 +41,7 @@ async function getToken() {
  async function writeData() {
     const tokens = await getToken();
     const jsonString = JSON.stringify(tokens);
-    fs.writeFile('tokens.json', jsonString, 'utf8', (err) => {
+    fs.writeFile('tokens.json', jsonString, 'utf8', (err: any) => {
         if(err) {
             console.error('Error writing to file:', err);
         } else {
