@@ -33,7 +33,7 @@ export default async function Spotify() {
     )
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-lg lg:flex">
+            <div className="z-10 max-w-5xl w-full font-mono text-lg ">
                 <div>
                     <h1>These are my top five Spotify artists:</h1>
                 </div>
