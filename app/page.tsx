@@ -1,8 +1,6 @@
 import { getS3Data } from "@/utils/get-s3-data"
 import  cloudCover from '@/utils/cloud-cover'
-import tinycolor from 'tinycolor2' 
 import Link from "next/link"
-import { text } from "stream/consumers"
 
 const input = {
   Bucket: 'amoore-nyc-weather',
@@ -16,6 +14,7 @@ export default async function Home() {
   const textColor = {
     color: sky_hex_color
   }
+  
     
   return (
     <main className="flex flex-col z-10 max-w-5xl w-full font-mono text-lg justify-between sm:p-24 p-10 min-h-screen ">
