@@ -9,7 +9,7 @@ interface S3Object {
     Key: string
 }
 
-export const revalidate = 1800;
+export const revalidate = 900;
 
 export async function getS3Data(input: S3Object) {
     const command = new GetObjectCommand(input);
