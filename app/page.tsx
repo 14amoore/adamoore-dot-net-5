@@ -23,7 +23,6 @@ export default async function Home() {
        <h2>My name is Adam Moore</h2>
        <h3>I&apos;m a Software Engineer and Creative Techologist, with an MFA from Parsons School of Design.</h3>
        <h3>I&apos;m based in Brooklyn where it is currently {current_temp} degrees fahrenheit, with {clouds} skies.</h3>
-       <h3>Click here to find out a bit more about how I&apos;m working with the weather and sky color.</h3>
        <h3>The sky is pretty close to hex color <span style={textColor}>{sky_hex_color}</span>.</h3>
        <h3>This is my portfolio website. It is, and most likely always will be, a work in progress</h3>
        <h3>For now take a gander at <Link className="text-fuchsia-500 underline" href='/music'>my top five Artists on Spotify.</Link></h3>
