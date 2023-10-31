@@ -1,5 +1,6 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"; // ES Modules import
 import { fromEnv } from '@aws-sdk/credential-provider-env'
+import { cache } from 'react';
 
 const client = new S3Client({region: 'us-east-1', credentials: fromEnv()})
 
@@ -7,6 +8,8 @@ interface S3Object {
     Bucket: string,
     Key: string
 }
+
+export const revalidate = 1800;
 
 export async function getS3Data(input: S3Object) {
     const command = new GetObjectCommand(input);
