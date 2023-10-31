@@ -11,10 +11,10 @@ interface S3Object {
 
 export const revalidate = 900;
 
-export async function getS3Data(input: S3Object) {
+export const getS3Data = cache(async (input: S3Object) => {
     const command = new GetObjectCommand(input);
     const { Body } = await client.send(command);
     const data:any = await Body?.transformToString()
     const jsonData = JSON.parse(data)
     return jsonData;
-}
+})

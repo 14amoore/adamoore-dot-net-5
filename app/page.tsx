@@ -2,6 +2,8 @@ import { getS3Data } from "@/utils/get-s3-data"
 import  cloudCover from '@/utils/cloud-cover'
 import Link from "next/link"
 
+export const dynamic = 'force-dynamic'
+
 const input = {
   Bucket: 'amoore-nyc-weather',
   Key: 'weather.json'
