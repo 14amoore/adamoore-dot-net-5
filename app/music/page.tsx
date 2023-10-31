@@ -1,5 +1,10 @@
-import { gets3Token } from '../../utils/get-s3-token'
+import { getS3Data } from "@/utils/get-s3-data"
 import Link from 'next/link';
+
+const input = {
+  Bucket: 'amoore-spotify-bucket',
+  Key: 'tokens.json'
+}
 
 const getTopArtists = async (token: string) => {
     const top_artists_url =
@@ -21,7 +26,7 @@ const getTopArtists = async (token: string) => {
   };
  
  async function getData () {
-    const {access_token} = await gets3Token()
+    const {access_token} = await getS3Data(input)
     const topArtists = await getTopArtists(access_token)
     return topArtists
 }
