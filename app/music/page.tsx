@@ -13,7 +13,7 @@ import StyledLink from "@/components/StyledLink";
 export default async function Spotify() {
     const data = await getData()
     const topArtistItem = data.items.map((artist: {id: string; name: string; uri: string}) => 
-        <li className='mb-1' key={artist.id}><Link href={artist.uri}>{artist.name}</Link></li>
+        <li className='mb-1' key={artist.id}><StyledLink route={artist.uri} linkType={'external'} routeText={artist.name} /></li>
     )
     return (
       <div className="z-10 max-w-5xl w-full font-mono text-lg ">
