@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export default function StyledLink({route, linkType, routeText}: {route: string, linkType: string, routeText: string}) {
+interface LinkProps {
+   route: string,
+   linkType: string,
+   routeText: string
+}
+
+export default function StyledLink({route, linkType, routeText}: LinkProps) {
         if (linkType === 'external') {
            return <Link href={route} className="text-green-500 underline">{routeText}</Link>
         }
