@@ -2,10 +2,11 @@ import { ReactNode, useState, useEffect } from 'react';
 
 interface ToolTipProps {
     children: ReactNode,
-    skyColor: string
+    skyColor: string,
+    skylineUrl: string,
 }
 
-export default function ToolTip({children, skyColor}: ToolTipProps) {
+export default function ToolTip({children, skyColor, skylineUrl}: ToolTipProps) {
     const [isVisible, setIsVisible] = useState(false);
     const [touchTimeout, setTouchTimeout] = useState<NodeJS.Timeout | number | null>(null);
 
@@ -35,7 +36,8 @@ export default function ToolTip({children, skyColor}: ToolTipProps) {
         >
             {children}
             {isVisible && (
-                <div style={{background: skyColor}} className='absolute w-20 h-20 bottom-[100%] left-[50%] mb-3 p-1 whitespace-nowrap z-50  rounded-lg'>
+                <div style={{background: skyColor}} className='absolute w-72 h-32 bottom-[100%] left-[100%] translate-x-[-50%]  mb-3 p-2 z-50 rounded-lg'>
+                    <div style={{backgroundImage: `url(${skylineUrl})`, backgroundSize: 'cover'}} className='w-full h-full rounded-lg'></div>
                 </div>
             )}
         </div>
