@@ -36,7 +36,7 @@ export default function ToolTip({children, skyColor, skylineUrl}: ToolTipProps) 
         >
             {children}
             {isVisible && (
-                <div style={{background: skyColor}} className='absolute w-72 h-32 bottom-[100%] left-[10%] mb-3 p-2 z-50 rounded-lg'>
+                <div style={{background: skyColor}} className='absolute w-72 h-32 bottom-[100%] left-[100%] translate-x-[-50%]  mb-3 p-2 z-50 rounded-lg'>
                     <div style={{backgroundImage: `url(${skylineUrl})`, backgroundSize: 'cover'}} className='w-full h-full rounded-lg'></div>
                 </div>
             )}
