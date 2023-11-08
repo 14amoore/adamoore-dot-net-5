@@ -3,6 +3,12 @@ import { getS3Data } from "@/utils/get-s3-data"
 import { getTopArtists } from '@/utils/getTopArtists'
 import Link from "next/link";
 import StyledLink from "@/components/StyledLink";
+
+interface topArtist {
+  id: string,
+  name: string,
+  uri: string
+}
  
  async function getData () {
     const {access_token} = await getS3Data(SPOTIFY_DATA_INPUT)
@@ -12,7 +18,7 @@ import StyledLink from "@/components/StyledLink";
 
 export default async function Spotify() {
     const data = await getData()
-    const topArtistItem = data.items.map((artist: {id: string; name: string; uri: string}) => 
+    const topArtistItem = data.items.map((artist: topArtist) => 
         <li className='mb-1' key={artist.id}><StyledLink route={artist.uri} linkType={'external'} routeText={artist.name} /></li>
     )
     return (
