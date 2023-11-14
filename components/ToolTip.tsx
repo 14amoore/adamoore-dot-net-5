@@ -25,7 +25,7 @@ export default function ToolTip({skyColor, skylineUrl}: ToolTipProps) {
         if(touchTimeout) clearTimeout(touchTimeout);
         setTouchTimeout(setTimeout(() => {
             setIsVisible(false);
-        }, 500)); // Delay hiding the tooltip
+        }, 500)); 
     }
     return (
         <div

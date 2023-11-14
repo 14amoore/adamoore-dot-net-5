@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 const defaultLayout = 'flex flex-col z-10 max-w-5xl w-full font-mono text-lg justify-between sm:p-24 p-10 min-h-screen '
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.adamoore.net'),
   title: 'adamoore.net V5',
   description: `Adam's Dev Porfolio`,
   openGraph: {
