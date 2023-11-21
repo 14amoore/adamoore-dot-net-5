@@ -7,7 +7,7 @@ interface ToolTipProps {
 
 export default function ToolTip({skyColor, skylineUrl}: ToolTipProps) {
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [touchTimeout, setTouchTimeout] = useState<NodeJS.Timeout | number | null>(null);
+    const [touchTimeout, setTouchTimeout] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         return () => {

@@ -1,3 +1,5 @@
+// add type for cover
+
 export default function cloudCover(cover: number) {
     let skyCondition;
     if(cover <= 12.5 ) {

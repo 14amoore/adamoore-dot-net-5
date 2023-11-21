@@ -1,8 +1,10 @@
 import Link from "next/link";
 
+type LinkType = "internal" | "external" | "Back"
+
 interface LinkProps {
    route: string,
-   linkType: string,
+   linkType: LinkType,
    routeText: string
 }
 

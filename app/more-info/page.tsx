@@ -1,4 +1,3 @@
-import Link from "next/link"
 import StyledLink from "@/components/StyledLink"
 
 export default function MoreInfo() {
@@ -11,7 +10,7 @@ export default function MoreInfo() {
             <h2>The data from <StyledLink route={'https://www.spotify.com'} linkType={'external'} routeText={'Spotify'}/> is handled in a similar fashion. I use a Lambda function to refresh the token that allows me to access Spotify&apos;s API. The token expires every hour. The new token is stored in another S3 bucket. The app uses the token to query Spotify&apos;s API and retrieves my top five artists.</h2>
             <h2>This app is built using <StyledLink route={'https://nextjs.org/'} linkType={'external'} routeText={'Next.js'}/>, <StyledLink route={'https://www.typescriptlang.org/'} linkType={'external'} routeText={'Typescript'}/>, and <StyledLink route={'https://tailwindcss.com/'} linkType={'external'} routeText={'Tailwind CSS'}/>.</h2>
             <h2>The app itself is hosted by <StyledLink route={'https://vercel.com/'} linkType={'external'} routeText={'Vercel'}/>.</h2>
-            <StyledLink route={'/'} linkType={'back'} routeText={'Back'}/>
+            <StyledLink route={'/'} linkType={'Back'} routeText={'<-- Back'}/>
         </div>
     )
 }
