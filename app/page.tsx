@@ -23,7 +23,7 @@ export default async function Home() {
           <DisplayColorElement isDay={day_or_night} color={sky_hex_color} skylineUrl={nyc_skyline_url} />
           <h3>If you&apos;d like to know more about how this app works please <StyledLink route={'/more-info'} linkType={'internal'} routeText={'click here'} />.</h3>
           <h3>This is my portfolio website. It is, and most likely always will be, a work in progress</h3>
-          <h3>For now take a gander at <StyledLink route={'/music'} linkType={'internal'} routeText={'my top five Spotify artists'} />.</h3>
+          <h3>Take a gander at <StyledLink route={'/music'} linkType={'internal'} routeText={'my top five Spotify artists'} />.</h3>
         </div>
       )
     } else {
