@@ -26,5 +26,14 @@ export default async function Home() {
           <h3>For now take a gander at <StyledLink route={'/music'} linkType={'internal'} routeText={'my top five Spotify artists'} />.</h3>
         </div>
       )
+    } else {
+      <div className="flex flex-col gap-y-2">
+          <h1 className="mb-2">Hi!</h1>
+          <h2>My name is Adam Moore</h2>
+          <h3>I&apos;m a Software Engineer and Creative Techologist, with an MFA from Parsons School of Design.</h3>
+          <h3>I&apos;m based in Beuatiful Brooklyn.</h3>
+          <h3>This is my portfolio website. It is, and most likely always will be, a work in progress</h3>
+          <h3>For now take a gander at <StyledLink route={'/music'} linkType={'internal'} routeText={'my top five Spotify artists'} />.</h3>
+        </div>
     }
 }
