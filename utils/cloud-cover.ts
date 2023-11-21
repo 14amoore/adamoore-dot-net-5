@@ -1,7 +1,9 @@
-// add type for cover
+type Cover = number
 
-export default function cloudCover(cover: number) {
-    let skyCondition;
+type CloudCoverTerms = 'clear' | 'mostly clear' | 'partly cloudy' | 'mostly cloudy' | 'cloudy'
+
+export default function cloudCover(cover: Cover): CloudCoverTerms {
+    let skyCondition: CloudCoverTerms;
     if(cover <= 12.5 ) {
         skyCondition = 'clear'
     } else if(cover > 12.5 && cover <=37.5) {
