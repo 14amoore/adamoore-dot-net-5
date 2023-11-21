@@ -18,13 +18,13 @@ export default async function Spotify() {
       <li className='mb-1' key={artist.id}><StyledLink route={artist.uri} linkType={'external'} routeText={artist.name} /></li>
     )
     return (
-      <div className="z-10 max-w-5xl w-full font-mono text-lg ">
+      <section className="z-10 max-w-5xl w-full font-mono text-lg ">
         <h1 className='mb-3'>These are my top five Spotify artists:</h1>
         <ul>{topArtistItem}</ul>
         <StyledLink route={'/'} linkType={'Back'} routeText={'<-- Back'}/>
-      </div>   
+      </section>   
     )
   } else {
-    return <div>No Artist Data Available</div>
+    return <section>No Artist Data Available</section>
   }
 }
