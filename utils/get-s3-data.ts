@@ -9,12 +9,46 @@ interface S3Object {
     Key: string
 }
 
+interface WeatherData {
+    type: 'weather',
+    current_time: string,
+    current_temp: number,
+    day_or_night: boolean,
+    cloudcover_percentage: number,
+    sky_hex_color: string,
+    nyc_skyline_url: string
+}
+
+interface SpotifyData {
+    type: 'spotify',
+    access_token: string,
+    refresh_token: string,
+}
+
+type S3Data =  WeatherData | SpotifyData
+
+
 export const revalidate = 900;
 
-export const getS3Data = cache(async (input: S3Object) => {
+// add interface for data returned by getS3Data
+
+export const getS3Data = cache(async (input: S3Object): Promise<S3Data | null> => {
+    try {
     const command = new GetObjectCommand(input);
     const { Body } = await client.send(command);
     const data:any = await Body?.transformToString()
     const jsonData = JSON.parse(data)
-    return jsonData;
+    if('current_temp' in jsonData) {
+        return {type: 'weather', ...jsonData};
+    } else if ('access_token' in jsonData) {
+        return {type: 'spotify',...jsonData}
+    } else {
+        console.error('Unknown data type in S3Data');
+        return null
+    }
+    } catch (error) {
+        console.error('Error fetching data from S3:', error);
+        throw error;
+    }
+    
 })
