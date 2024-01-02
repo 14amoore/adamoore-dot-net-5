@@ -5,10 +5,15 @@ interface ToolTipProps {
     skylineUrl: string,
 }
 
+interface Position {
+    top: number,
+    left: number,
+}
+
 export default function ToolTip({skyColor, skylineUrl}: ToolTipProps) {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [touchTimeout, setTouchTimeout] = useState<NodeJS.Timeout | null>(null);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const [position, setPosition] = useState<Position>({ top: 0, left: 0 });
     const [z, setZ] = useState<number>(-1);
 
     useEffect(() => {
