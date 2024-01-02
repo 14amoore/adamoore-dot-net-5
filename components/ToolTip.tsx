@@ -69,7 +69,7 @@ export default function ToolTip({skyColor, skylineUrl}: ToolTipProps) {
             onClick={isVisible ? hideTooltip : showTooltip}
             onMouseEnter={showTooltip}
             onMouseLeave={hideTooltip} className='underline cursor-pointer' style={{color: skyColor}}>{skyColor}</span>
-            <div id='centeredEl' style={{background: skyColor, opacity: isVisible ? 100 : 0, left: `${position.left}px`, top: `${position.top}px`, zIndex: `${z}`}} className='fixed w-72 h-32 transition-opacity duration-500 mb-3 p-2 rounded-lg'>
+            <div id='centeredEl' style={{background: skyColor, opacity: isVisible ? 100 : 0, left: `${position.left}px`, top: `${position.top}px`, zIndex: `${z}`}} className='fixed w-72 h-32 transition-all duration-500 mb-3 p-2 rounded-lg'>
                 <div style={{backgroundImage: `url(${skylineUrl})`, backgroundSize: 'cover'}} className='w-full h-full rounded-lg'></div>
             </div>
         </div>
