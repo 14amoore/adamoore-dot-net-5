@@ -1,3 +1,5 @@
+import { unstable_noStore as noStore } from 'next/cache';
+
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"; // ES Modules import
 import { fromEnv } from '@aws-sdk/credential-provider-env'
 
@@ -30,6 +32,7 @@ type S3Data =  WeatherData | SpotifyData
 
 export const getS3Data = async (input: S3Object): Promise<S3Data | null> => {
     try {
+    noStore();
     const command = new GetObjectCommand(input);
     const { Body } = await client.send(command);
     const data:any = await Body?.transformToString()
