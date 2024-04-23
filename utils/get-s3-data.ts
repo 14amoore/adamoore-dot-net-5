@@ -1,6 +1,5 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"; // ES Modules import
 import { fromEnv } from '@aws-sdk/credential-provider-env'
-import { cache } from 'react';
 
 const client = new S3Client({region: 'us-east-1', credentials: fromEnv()})
 
@@ -27,12 +26,9 @@ interface SpotifyData {
 
 type S3Data =  WeatherData | SpotifyData
 
-
-export const revalidate = 900;
-
 // add interface for data returned by getS3Data
 
-export const getS3Data = cache(async (input: S3Object): Promise<S3Data | null> => {
+export const getS3Data = async (input: S3Object): Promise<S3Data | null> => {
     try {
     const command = new GetObjectCommand(input);
     const { Body } = await client.send(command);
@@ -51,4 +47,4 @@ export const getS3Data = cache(async (input: S3Object): Promise<S3Data | null> =
         throw error;
     }
     
-})
+}
