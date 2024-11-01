@@ -1,29 +1,50 @@
-import { WEATHER_DATA_INPUT } from '@/utils/constants';
-import { getS3Data } from '@/utils/get-s3-data';
+'use client';
+
+import { useState, useEffect } from 'react';
 import cloudCover from '@/utils/cloud-cover';
 import StyledLink from '@/components/StyledLink';
 import DisplayColorElement from '@/components/DisplayColorElement';
+import { S3Data } from '@/utils/types';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
-  const weather = await getS3Data(WEATHER_DATA_INPUT);
+export default function Home() {
+  const [weather, setWeather] = useState<S3Data | null>(null);
+
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      try {
+        const response = await fetch('/api/get-s3-data');
+        const data = await response.json();
+        setWeather(data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    };
+
+    fetchWeatherData();
+  }, []);
+
+  if (!weather) {
+    return null;
+  }
 
   if (weather?.type === 'weather') {
     const { sky_color, current_temp, cloudcover_percentage, day_or_night } =
       weather;
     const clouds = cloudCover(cloudcover_percentage);
+
     return (
       <div className="flex flex-col gap-y-2">
         <h1 className="mb-2">Hi!</h1>
         <h2>My name is Adam Moore</h2>
         <p>
-          I&apos;m a Software Engineer and Creative Techologist, with an MFA
+          I&apos;m a Software Engineer and Creative Technologist, with an MFA
           from Parsons School of Design.
         </p>
         <p>
           I&apos;m based in Brooklyn where it is currently {current_temp}{' '}
-          degrees fahrenheit, with {clouds} skies.
+          degrees Fahrenheit, with {clouds} skies.
         </p>
         <DisplayColorElement isDay={day_or_night} color={sky_color} />
         <h3>
@@ -37,7 +58,7 @@ export default async function Home() {
         </h3>
         <p>
           This is my portfolio website. It is, and most likely always will be, a
-          work in progress
+          work in progress.
         </p>
         <h3>
           Take a gander at{' '}
@@ -50,21 +71,23 @@ export default async function Home() {
         </h3>
       </div>
     );
-  } else {
+  }
+
+  return (
     <div className="flex flex-col gap-y-2">
       <h1 className="mb-2">Hi!</h1>
       <h2>My name is Adam Moore</h2>
       <p>
-        I&apos;m a Software Engineer and Creative Techologist, with an MFA from
+        I&apos;m a Software Engineer and Creative Technologist, with an MFA from
         Parsons School of Design.
       </p>
-      <p>I&apos;m based in Beuatiful Brooklyn.</p>
+      <p>I&apos;m based in Beautiful Brooklyn.</p>
       <p>
         This is my portfolio website. It is, and most likely always will be, a
-        work in progress
+        work in progress.
       </p>
       <h3>
-        For now take a gander at{' '}
+        For now, take a gander at{' '}
         <StyledLink
           route={'/music'}
           linkType={'internal'}
@@ -72,6 +95,6 @@ export default async function Home() {
         />
         .
       </h3>
-    </div>;
-  }
+    </div>
+  );
 }
