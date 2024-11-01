@@ -4,6 +4,8 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { fromEnv } from '@aws-sdk/credential-provider-env';
 import { SPOTIFY_DATA_INPUT } from '@/utils/constants';
 
+export const dynamic = 'force-dynamic';
+
 const s3Client = new S3Client({ region: 'us-east-1', credentials: fromEnv() });
 
 interface TopArtist {
@@ -16,6 +18,8 @@ export async function GET() {
   // Set headers to prevent caching
   const headers = new Headers({
     'Cache-Control': 'no-store, max-age=0',
+    'Pragma': 'no-cache',
+    'Expires': '0',
   });
 
   try {
@@ -23,7 +27,6 @@ export async function GET() {
     const s3Command = new GetObjectCommand(SPOTIFY_DATA_INPUT);
     const s3Response = await s3Client.send(s3Command);
 
-    // Check if Body is defined and can be converted to a string
     if (!s3Response.Body) {
       throw new Error('S3 response Body is undefined');
     }

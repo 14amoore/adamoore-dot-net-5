@@ -5,6 +5,8 @@ import { fromEnv } from '@aws-sdk/credential-provider-env';
 import { SKY_LINE_IMAGE_INPUT } from '../../../utils/constants';
 import { Readable } from 'stream';
 
+export const dynamic = 'force-dynamic';
+
 const client = new S3Client({ region: 'us-east-1', credentials: fromEnv() });
 
 // Helper function to convert stream to buffer
@@ -18,30 +20,31 @@ const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
 };
 
 export async function GET() {
+  // Define headers to prevent caching
+  const headers = new Headers({
+    'Cache-Control': 'no-store, max-age=0',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    'Content-Type': 'application/json', // Default to JSON for all responses
+  });
+
   try {
     const command = new GetObjectCommand(SKY_LINE_IMAGE_INPUT);
     const { Body } = await client.send(command);
-
-    // Define Headers instance for consistent caching control
-    const headers = new Headers({
-      'Cache-Control': 'no-store, max-age=0',
-      'Content-Type': 'application/json', // Default to JSON for all responses
-    });
 
     if (Body instanceof Readable) {
       const buffer = await streamToBuffer(Body);
       const base64Image = buffer.toString('base64');
       const imageUrl = `data:image/png;base64,${base64Image}`;
 
-      // Return the response with headers for the image data
+      // Set Content-Type specifically for image responses
+      headers.set('Content-Type', 'application/json');
       return NextResponse.json({ imageUrl }, { headers });
     } else {
-      // Return the response with headers for a 404 error
       return NextResponse.json({ error: "Image not found" }, { status: 404, headers });
     }
   } catch (error) {
     console.error("Error fetching image:", error);
-    // Return the response with headers for a 500 error
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500, headers });
   }
 }
