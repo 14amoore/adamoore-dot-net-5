@@ -16,8 +16,7 @@ interface WeatherData {
     current_temp: number,
     day_or_night: boolean,
     cloudcover_percentage: number,
-    sky_hex_color: string,
-    nyc_skyline_url: string
+    sky_color: string,
 }
 
 interface SpotifyData {
@@ -37,6 +36,7 @@ export const getS3Data = async (input: S3Object): Promise<S3Data | null> => {
     const { Body } = await client.send(command);
     const data:any = await Body?.transformToString()
     const jsonData = JSON.parse(data)
+    
     if('current_temp' in jsonData) {
         return {type: 'weather', ...jsonData};
     } else if ('access_token' in jsonData) {
