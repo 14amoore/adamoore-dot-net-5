@@ -13,6 +13,11 @@ interface TopArtist {
 }
 
 export async function GET() {
+  // Set headers to prevent caching
+  const headers = new Headers({
+    'Cache-Control': 'no-store, max-age=0',
+  });
+
   try {
     // Fetch Spotify token from S3
     const s3Command = new GetObjectCommand(SPOTIFY_DATA_INPUT);
@@ -48,9 +53,9 @@ export async function GET() {
       uri: artist.uri,
     }));
 
-    return NextResponse.json(topArtists);
+    return NextResponse.json(topArtists, { headers });
   } catch (error) {
     console.error('Error in get-spotify-top-artists route:', error);
-    return NextResponse.json({ error: 'Failed to fetch top artists' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch top artists' }, { status: 500, headers });
   }
 }

@@ -26,14 +26,19 @@ export async function GET() {
       const data = await streamToString(Body);
       const jsonData = JSON.parse(data);
 
+      // Set headers to prevent caching
+      const headers = new Headers({
+        'Cache-Control': 'no-store, max-age=0',
+      });
+
       // Return data with type detection for structured data
       if ('current_temp' in jsonData) {
-        return NextResponse.json({ type: 'weather', ...jsonData });
+        return NextResponse.json({ type: 'weather', ...jsonData }, { headers });
       } else if ('access_token' in jsonData) {
-        return NextResponse.json({ type: 'spotify', ...jsonData });
+        return NextResponse.json({ type: 'spotify', ...jsonData }, { headers });
       } else {
         console.error('Unknown data type in S3Data');
-        return NextResponse.json({ error: 'Unknown data type' }, { status: 400 });
+        return NextResponse.json({ error: 'Unknown data type' }, { status: 400, headers });
       }
     } else {
       return NextResponse.json({ error: 'No data found in S3' }, { status: 404 });
