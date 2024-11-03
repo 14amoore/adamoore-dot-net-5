@@ -126,8 +126,8 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
   };
 
   const toolTipClass = imageSeen
-    ? 'underline cursor-pointer relative'
-    : 'underline cursor-pointer transition-transform ease-in-out animate-pulse';
+    ? 'relative'
+    : 'transition-transform ease-in-out animate-pulse';
 
   // Updated sparkleClass to apply animation only if sparkles have not been seen
   const sparkleClass =
@@ -143,7 +143,7 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
         onMouseLeave={hideTooltip}
         aria-expanded={isVisible}
         aria-label="Tooltip with image"
-        className={`${toolTipClass}`}
+        className={`${toolTipClass} font-black underline cursor-pointer`}
         style={{ color: skyColor }}
       >
         {skyColor}
