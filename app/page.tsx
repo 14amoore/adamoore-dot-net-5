@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import cloudCover from '@/utils/cloud-cover';
+import tempColors from '@/utils/temp-color';
 import StyledLink from '@/components/StyledLink';
 import DisplayColorElement from '@/components/DisplayColorElement';
 import { S3Data } from '@/utils/types';
@@ -33,6 +34,7 @@ export default function Home() {
     const { sky_color, current_temp, cloudcover_percentage, day_or_night } =
       weather;
     const clouds = cloudCover(cloudcover_percentage);
+    const tempColor = tempColors(current_temp);
 
     return (
       <div className="flex flex-col gap-y-2">
@@ -43,8 +45,17 @@ export default function Home() {
           from Parsons School of Design.
         </p>
         <p>
-          I&apos;m based in Brooklyn where it is currently {current_temp}{' '}
-          degrees Fahrenheit, with {clouds} skies.
+          <span>I&apos;m based in Brooklyn where it is currently</span>
+          <span className="font-black" style={{ color: tempColor }}>
+            {' '}
+            {current_temp} degrees
+          </span>
+          <span> Fahrenheit, with</span>
+          <span className="font-black" style={{ color: clouds[1] }}>
+            {' '}
+            {clouds[0]} skies
+          </span>
+          <span>.</span>
         </p>
         <DisplayColorElement isDay={day_or_night} color={sky_color} />
         <h3>
