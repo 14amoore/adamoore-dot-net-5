@@ -17,6 +17,7 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
   const [position, setPosition] = useState<Position>({ top: 0, left: 0 });
   const [z, setZ] = useState<number>(-1);
   const [imageData, setImageData] = useState<string | null>(null); // Store image data URL
+  const [imageSeen, setImageSeen] = useState<boolean>(false);
 
   //   Fetch image data when the component mounts
   // Fetch image data from the API route when the component mounts
@@ -69,6 +70,11 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const seenStatus = localStorage.getItem('imageSeen');
+    if (seenStatus === 'true') setImageSeen(true);
+  }, []);
+
   const showTooltip = () => {
     setTouchTimeout(
       setTimeout(() => {
@@ -76,6 +82,8 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
         setZ(50);
       }, 350)
     );
+    setImageSeen(true);
+    localStorage.setItem('imageSeen', 'true');
   };
 
   const hideTooltip = () => {
@@ -87,13 +95,20 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
       }, 350)
     );
   };
+
+  const toolTipClass = imageSeen
+    ? 'underline cursor-pointer'
+    : 'underline cursor-pointer transition-transform ease-in-out animate-pulse';
+
   return (
     <div className="relative inline-block">
       <span
         onClick={isVisible ? hideTooltip : showTooltip}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
-        className="underline cursor-pointer"
+        aria-expanded={isVisible}
+        aria-label="Tooltip with image"
+        className={toolTipClass}
         style={{ color: skyColor }}
       >
         {skyColor}
@@ -107,7 +122,7 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
           top: `${position.top}px`,
           zIndex: `${z}`,
         }}
-        className="fixed w-72 h-32 transition-all duration-500 mb-3 p-2 rounded-lg"
+        className="fixed w-[80vw] h-[20vh] md:w-[60vw] md:h-[20vh] lg:w-[40vw] lg:h-[20vh] transition-all duration-500 mb-3 p-2 rounded-lg"
       >
         {imageData ? (
           <div
