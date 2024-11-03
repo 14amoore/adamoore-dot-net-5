@@ -90,8 +90,10 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
     // Set imageSeen to false if more than TOOLTIP_EXPIRY_DAYS have passed
     if (seenStatus === 'true' && daysSinceSeen <= TOOLTIP_EXPIRY_DAYS) {
       setImageSeen(true);
+      setShowSparkles(true);
     } else {
       setImageSeen(false);
+      setShowSparkles(false);
     }
   }, []);
 
