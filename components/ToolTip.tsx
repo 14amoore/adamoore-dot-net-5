@@ -13,6 +13,7 @@ interface Position {
 
 const TOOLTIP_SEEN_KEY: string = 'imageSeen';
 const TOOLTIP_SEEN_TIMESTAMP_KEY: string = 'imageSeenTimestamp';
+const SPARKLES_SEEN_KEY = 'sparklesSeen';
 const TOOLTIP_EXPIRY_DAYS: number = 1;
 
 export default function ToolTip({ skyColor }: ToolTipProps) {
@@ -77,22 +78,26 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
 
   // Check local storage for 'imageSeen' status and timestamp
   useEffect(() => {
-    // const seenStatus = localStorage.getItem(TOOLTIP_SEEN_KEY);
-    // const seenTimestamp = localStorage.getItem(TOOLTIP_SEEN_TIMESTAMP_KEY);
-    // // Calculate the expiration date
-    // const now = new Date();
-    // const lastSeenDate = seenTimestamp
-    //   ? new Date(parseInt(seenTimestamp, 10))
-    //   : null;
-    // const daysSinceSeen = lastSeenDate
-    //   ? (now.getTime() - lastSeenDate.getTime()) / (1000 * 60 * 60 * 24)
-    //   : Infinity;
-    // // Set imageSeen to false if more than TOOLTIP_EXPIRY_DAYS have passed
-    // if (seenStatus === 'true' && daysSinceSeen <= TOOLTIP_EXPIRY_DAYS) {
-    //   setImageSeen(true);
-    // } else {
-    //   setImageSeen(false);
-    // }
+    const seenStatus = localStorage.getItem(TOOLTIP_SEEN_KEY);
+    const seenTimestamp = localStorage.getItem(TOOLTIP_SEEN_TIMESTAMP_KEY);
+    const sparklesSeen = localStorage.getItem(SPARKLES_SEEN_KEY);
+    // Calculate the expiration date
+    const now = new Date();
+    const lastSeenDate = seenTimestamp
+      ? new Date(parseInt(seenTimestamp, 10))
+      : null;
+    const daysSinceSeen = lastSeenDate
+      ? (now.getTime() - lastSeenDate.getTime()) / (1000 * 60 * 60 * 24)
+      : Infinity;
+    // Set imageSeen to false if more than TOOLTIP_EXPIRY_DAYS have passed
+    if (seenStatus === 'true' && daysSinceSeen <= TOOLTIP_EXPIRY_DAYS) {
+      setImageSeen(true);
+      setShowSparkles(true);
+      localStorage.setItem(SPARKLES_SEEN_KEY, 'true');
+    } else {
+      setImageSeen(false);
+      setShowSparkles(false);
+    }
   }, []);
 
   const showTooltip = () => {
@@ -104,9 +109,8 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
     );
     // Mark tooltip as seen and set the timestamp
     setImageSeen(true);
-    // localStorage.setItem('imageSeen', 'true');
-    // localStorage.setItem(TOOLTIP_SEEN_KEY, 'true');
-    // localStorage.setItem(TOOLTIP_SEEN_TIMESTAMP_KEY, Date.now().toString());
+    localStorage.setItem(TOOLTIP_SEEN_KEY, 'true');
+    localStorage.setItem(TOOLTIP_SEEN_TIMESTAMP_KEY, Date.now().toString());
   };
 
   const hideTooltip = () => {
@@ -116,6 +120,7 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
         setIsVisible(false);
         setZ(-1);
         setTimeout(() => setShowSparkles(true), 500);
+        // Ensure sparkles persist
       }, 350)
     );
   };
@@ -124,8 +129,11 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
     ? 'underline cursor-pointer relative'
     : 'underline cursor-pointer transition-transform ease-in-out animate-pulse';
 
-  // Sparkle class logic based on showSparkles state
-  // const sparkleClass = showSparkles ? 'sparkle-text animate-sparkleFade' : '';
+  // Updated sparkleClass to apply animation only if sparkles have not been seen
+  const sparkleClass =
+    showSparkles && !localStorage.getItem(SPARKLES_SEEN_KEY)
+      ? 'animate-sparkleFade' // Only animate sparkles on the first view
+      : ''; // Static rendering for subsequent views
 
   return (
     <div className="relative inline-block">
@@ -142,7 +150,9 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
         {showSparkles && (
           <>
             {/* Sparkles appear only when showSparkles is true */}
-            <span className="absolute top-[-12px] right-[-16px] animate-sparkleFade">
+            <span
+              className={`absolute top-[-12px] right-[-16px] ${sparkleClass}`}
+            >
               ✨
             </span>
           </>
