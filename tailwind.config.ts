@@ -21,7 +21,7 @@ const config: Config = {
       },
       animation: {
         pulse: 'pulse 3s ease-in-out infinite',
-        sparkleFade: 'sparkleFade .175s ease-in-out forwards',
+        sparkleFade: 'sparkleFade 0.375s ease-in-out forwards',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
