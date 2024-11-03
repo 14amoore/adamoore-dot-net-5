@@ -77,22 +77,22 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
 
   // Check local storage for 'imageSeen' status and timestamp
   useEffect(() => {
-    // const seenStatus = localStorage.getItem(TOOLTIP_SEEN_KEY);
-    // const seenTimestamp = localStorage.getItem(TOOLTIP_SEEN_TIMESTAMP_KEY);
-    // // Calculate the expiration date
-    // const now = new Date();
-    // const lastSeenDate = seenTimestamp
-    //   ? new Date(parseInt(seenTimestamp, 10))
-    //   : null;
-    // const daysSinceSeen = lastSeenDate
-    //   ? (now.getTime() - lastSeenDate.getTime()) / (1000 * 60 * 60 * 24)
-    //   : Infinity;
-    // // Set imageSeen to false if more than TOOLTIP_EXPIRY_DAYS have passed
-    // if (seenStatus === 'true' && daysSinceSeen <= TOOLTIP_EXPIRY_DAYS) {
-    //   setImageSeen(true);
-    // } else {
-    //   setImageSeen(false);
-    // }
+    const seenStatus = localStorage.getItem(TOOLTIP_SEEN_KEY);
+    const seenTimestamp = localStorage.getItem(TOOLTIP_SEEN_TIMESTAMP_KEY);
+    // Calculate the expiration date
+    const now = new Date();
+    const lastSeenDate = seenTimestamp
+      ? new Date(parseInt(seenTimestamp, 10))
+      : null;
+    const daysSinceSeen = lastSeenDate
+      ? (now.getTime() - lastSeenDate.getTime()) / (1000 * 60 * 60 * 24)
+      : Infinity;
+    // Set imageSeen to false if more than TOOLTIP_EXPIRY_DAYS have passed
+    if (seenStatus === 'true' && daysSinceSeen <= TOOLTIP_EXPIRY_DAYS) {
+      setImageSeen(true);
+    } else {
+      setImageSeen(false);
+    }
   }, []);
 
   const showTooltip = () => {
@@ -104,9 +104,9 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
     );
     // Mark tooltip as seen and set the timestamp
     setImageSeen(true);
-    // localStorage.setItem('imageSeen', 'true');
-    // localStorage.setItem(TOOLTIP_SEEN_KEY, 'true');
-    // localStorage.setItem(TOOLTIP_SEEN_TIMESTAMP_KEY, Date.now().toString());
+    localStorage.setItem('imageSeen', 'true');
+    localStorage.setItem(TOOLTIP_SEEN_KEY, 'true');
+    localStorage.setItem(TOOLTIP_SEEN_TIMESTAMP_KEY, Date.now().toString());
   };
 
   const hideTooltip = () => {
@@ -123,9 +123,6 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
   const toolTipClass = imageSeen
     ? 'underline cursor-pointer relative'
     : 'underline cursor-pointer transition-transform ease-in-out animate-pulse';
-
-  // Sparkle class logic based on showSparkles state
-  // const sparkleClass = showSparkles ? 'sparkle-text animate-sparkleFade' : '';
 
   return (
     <div className="relative inline-block">
