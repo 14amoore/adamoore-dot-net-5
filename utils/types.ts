@@ -4,7 +4,8 @@ export interface WeatherData {
     current_temp: number;
     day_or_night: boolean;
     cloudcover_percentage: number;
-    sky_color: string;
+    nyc_skyline_url: string;
+    sky_hex_color: string;
   }
   
   export interface SpotifyData {

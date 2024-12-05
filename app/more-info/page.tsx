@@ -16,7 +16,7 @@ export default function MoreInfo() {
       </p>
       <h2>Sky Color and Skyline Photo:</h2>
       <p>
-        Previously I was scraping{' '}
+        I am currently scraping{' '}
         <StyledLink
           route={'https://nskyc.com/'}
           linkType={'external'}
@@ -26,15 +26,12 @@ export default function MoreInfo() {
         skyline.
       </p>
       <p>
-        Unfortunately, the cam that provided these images seems to be down, with
-        no information about when it might come back. As such, NSKYC is no
-        longer useful to me (RIP NSKYC—it was a great idea).
-      </p>
-      <p>
-        Because of this I am now capturing a new image of the NY Skyline, taken
-        from Rosevelt Island. I process the image using sharp to determine the
-        average color of the sky. Sometimes, you just have to do things
-        yourself.
+        For about a month I was scraping a camera that provided an image taken
+        from Rosevelt Island. I was then processing the image myself using sharp
+        to get the approximate HEX color code. As of now NSKYC is up and running
+        again! Truth be told I prefer the image of lower Manhattan. One possible
+        next step for this project is to setup some monitoring so that I will be
+        notified when NSKYC is down.
       </p>
       <h2>Data Handling and Storage:</h2>
       <p>
