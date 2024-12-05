@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 interface ToolTipProps {
   skyColor: string;
+  imageUrl: string;
 }
 
 interface Position {
@@ -16,32 +17,13 @@ const TOOLTIP_SEEN_TIMESTAMP_KEY: string = 'imageSeenTimestamp';
 const SPARKLES_SEEN_KEY = 'sparklesSeen';
 const TOOLTIP_EXPIRY_DAYS: number = 1;
 
-export default function ToolTip({ skyColor }: ToolTipProps) {
+export default function ToolTip({ skyColor, imageUrl }: ToolTipProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [showSparkles, setShowSparkles] = useState<boolean>(false); // New state for sparkles
   const [touchTimeout, setTouchTimeout] = useState<NodeJS.Timeout | null>(null);
   const [position, setPosition] = useState<Position>({ top: 0, left: 0 });
   const [z, setZ] = useState<number>(-1);
-  const [imageData, setImageData] = useState<string | null>(null); // Store image data URL
   const [imageSeen, setImageSeen] = useState<boolean>(false);
-
-  //   Fetch image data when the component mounts
-  // Fetch image data from the API route when the component mounts
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await fetch('/api/get-image');
-        const data = await response.json();
-        if (data.imageUrl) {
-          setImageData(data.imageUrl); // Set image data URL in state
-        }
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      }
-    };
-
-    fetchImage();
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -80,7 +62,6 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
   useEffect(() => {
     const seenStatus = localStorage.getItem(TOOLTIP_SEEN_KEY);
     const seenTimestamp = localStorage.getItem(TOOLTIP_SEEN_TIMESTAMP_KEY);
-    const sparklesSeen = localStorage.getItem(SPARKLES_SEEN_KEY);
     // Calculate the expiration date
     const now = new Date();
     const lastSeenDate = seenTimestamp
@@ -169,10 +150,10 @@ export default function ToolTip({ skyColor }: ToolTipProps) {
         }}
         className="fixed w-[80vw] h-[20vh] md:w-[60vw] md:h-[20vh] lg:w-[40vw] lg:h-[20vh] transition-all duration-500 mb-3 p-2 rounded-lg"
       >
-        {imageData ? (
+        {imageUrl ? (
           <div
             style={{
-              backgroundImage: `url(${imageData})`,
+              backgroundImage: `url(${imageUrl})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}

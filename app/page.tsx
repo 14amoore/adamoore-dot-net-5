@@ -31,8 +31,13 @@ export default function Home() {
   }
 
   if (weather?.type === 'weather') {
-    const { sky_color, current_temp, cloudcover_percentage, day_or_night } =
-      weather;
+    const {
+      current_temp,
+      cloudcover_percentage,
+      day_or_night,
+      nyc_skyline_url,
+      sky_hex_color,
+    } = weather;
     const clouds = cloudCover(cloudcover_percentage);
     const tempColor = tempColors(current_temp);
 
@@ -57,7 +62,11 @@ export default function Home() {
           </span>
           <span>.</span>
         </p>
-        <DisplayColorElement isDay={day_or_night} color={sky_color} />
+        <DisplayColorElement
+          isDay={day_or_night}
+          color={sky_hex_color}
+          imageUrl={nyc_skyline_url}
+        />
         <h3>
           If you&apos;d like to know more about how this app works please{' '}
           <StyledLink
